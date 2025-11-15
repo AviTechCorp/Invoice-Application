@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body data-theme="modern">
+
+    <div class="pageWrapper">
+        <div class="invoiceContainer">
+            <!-- Header -->
+            <div class="header">
+                <div class="titleContainer colSpan2">
+                    <i data-lucide="building-2"></i>
+                    <h1 class="title">Invoice Generator</h1>
+                </div>
+                <div class="themeSelector">
+                    <label for="theme">Theme:</label>
+                    <select id="theme" class="select" data-state="theme">
+                        <option value="modern">Modern</option>
+                        <option value="classic">Classic</option>
+                        <option value="minimal">Minimalist</option>
+                    </select>
+                </div>
+                <div class="currencySelector">
+                    <label for="currency">Currency:</label>
+                    <select id="currency" class="select"></select>
+                </div>
+            </div>
+
+            <!-- Google Maps Loading Alert -->
+            <div id="maps-alert" class="alert" style="display: none;">
+                <i data-lucide="map-pin" class="icon-inline"></i>
+                Address autocomplete is loading... You can still type addresses manually.
+            </div>
+
+            <!-- Company Information -->
+            <div class="section">
+                <h2 class="sectionTitle">Your Company Information</h2>
+                <div class="grid grid2Cols">
+                    <input type="text" id="company-name" placeholder="Company Name" class="input" data-state="companyInfo.name">
+                    <div class="inputWrapper">
+                        <input type="text" id="company-address" placeholder="Address (start typing to search)" class="input" data-state="companyInfo.address">
+                        <i data-lucide="map-pin" class="inputIcon"></i>
+                    </div>
+                    <div class="inputWrapper">
+                        <input type="text" id="company-city" placeholder="City, State, ZIP" class="input" data-state="companyInfo.city">
+                        <i data-lucide="map-pin" class="inputIcon"></i>
+                    </div>
+                    <input type="text" id="company-phone" placeholder="Phone" class="input" data-state="companyInfo.phone">
+                    <input type="email" id="company-email" placeholder="Email" class="input colSpan2" data-state="companyInfo.email">
+                </div>
+            </div>
+
+            <!-- Invoice Details -->
+            <div class="section">
+                <h2 class="sectionTitle">Invoice Details</h2>
+                <div class="grid grid3Cols">
+                    <div>
+                        <label for="invoice-number" class="label">Invoice Number</label>
+                        <input type="text" id="invoice-number" placeholder="INV-001" class="input" data-state="invoiceDetails.number">
+                    </div>
+                    <div>
+                        <label for="invoice-date" class="label">Invoice Date</label>
+                        <input type="date" id="invoice-date" class="input" data-state="invoiceDetails.date">
+                    </div>
+                    <div>
+                        <label for="due-date" class="label">Due Date</label>
+                        <input type="date" id="due-date" class="input" data-state="invoiceDetails.dueDate">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Information -->
+            <div class="section">
+                <h2 class="sectionTitle">Bill To</h2>
+                <div class="grid grid2Cols">
+                    <input type="text" id="client-name" placeholder="Client Name" class="input" data-state="clientInfo.name">
+                    <div class="inputWrapper">
+                        <input type="text" id="client-address" placeholder="Address (start typing to search)" class="input" data-state="clientInfo.address">
+                        <i data-lucide="map-pin" class="inputIcon"></i>
+                    </div>
+                    <div class="inputWrapper">
+                        <input type="text" id="client-city" placeholder="City, State, ZIP" class="input" data-state="clientInfo.city">
+                        <i data-lucide="map-pin" class="inputIcon"></i>
+                    </div>
+                    <input type="email" id="client-email" placeholder="Email" class="input" data-state="clientInfo.email">
+                </div>
+            </div>
+
+            <!-- Line Items -->
+            <div class="section">
+                <div class="itemsHeader">
+                    <h2 class="sectionTitle">Items</h2>
+                    <button id="add-item" class="button buttonPrimary">
+                        <i data-lucide="plus"></i>
+                        Add Item
+                    </button>
+                </div>
+                <div class="tableWrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th class="alignRight colNarrow">Quantity</th>
+                                <th class="alignRight colMedium">Rate (<span class="currency-symbol">$</span>)</th>
+                                <th class="alignRight colMedium">Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="items-tbody">
+                            <!-- Item rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals, VAT, and Payment Details -->
+                <div class="summaryContainer">
+                    <div class="paymentDetails">
+                        <h2 class="sectionTitle">Payment Details</h2>
+                        <div class="grid grid2Cols">
+                            <div>
+                                <label for="bank-name" class="label">Bank Name</label>
+                                <input type="text" id="bank-name" placeholder="e.g., FNB, Standard Bank" class="input" data-state="paymentDetails.bankName">
+                            </div>
+                            <div>
+                                <label for="account-holder" class="label">Account Holder</label>
+                                <input type="text" id="account-holder" placeholder="Your Name / Company Name" class="input" data-state="paymentDetails.accountHolder">
+                            </div>
+                            <div>
+                                <label for="account-number" class="label">Account Number</label>
+                                <input type="text" id="account-number" placeholder="Your Account Number" class="input" data-state="paymentDetails.accountNumber">
+                            </div>
+                            <div>
+                                <label for="payment-reference" class="label">Reference</label>
+                                <input type="text" id="payment-reference" placeholder="Invoice No. or Client Name" class="input" data-state="paymentDetails.reference">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="totalsContainer">
+                        <div class="totalsBox">
+                            <div class="summaryRow">
+                                <span>Subtotal</span>
+                                <span id="subtotal-amount">$0.00</span>
+                            </div>
+                            <div class="summaryRow vatRow">
+                                <span>VAT (%)</span>
+                                <input type="number" id="vat-rate" class="input vatInput" value="0" data-state="vatRate">
+                                <span id="vat-amount">$0.00</span>
+                            </div>
+                            <div class="totalRow">
+                                <span>Total Due</span>
+                                <span id="total-amount" class="totalAmount">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="section grid grid2Cols">
+                <div>
+                    <h2 class="sectionTitle">Notes</h2>
+                    <textarea id="notes" placeholder="Thank you note, additional information..." class="textarea" rows="4" data-state="notes"></textarea>
+                </div>
+                <div>
+                    <h2 class="sectionTitle">Terms & Conditions</h2>
+                    <textarea id="terms" placeholder="e.g., Payment is due within 30 days..." class="textarea" rows="4" data-state="terms"></textarea>
+                </div>
+            </div>
+
+            <!-- Download Buttons -->
+            <div class="actionsContainer">
+                <button id="save-pdf" class="button buttonDownload">
+                    <i data-lucide="file-text"></i>
+                    Save as PDF
+                </button>
+                <button id="download-html" class="button buttonSave">
+                    <i data-lucide="download"></i>
+                    Download HTML
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Created with <i data-lucide="heart" class="icon-inline"></i> by Gemini Code Assist</p>
+    </footer>
+
+
+    <!-- Item Row Template -->
+    <template id="item-row-template">
+        <tr>
+            <td>
+                <input type="text" placeholder="Item description" class="input item-description">
+            </td>
+            <td>
+                <input type="number" min="1" value="1" class="input alignRight item-quantity">
+            </td>
+            <td>
+                <input type="number" min="0" step="0.01" value="0" class="input alignRight item-rate">
+            </td>
+            <td class="alignRight colAmount item-amount">$0.00</td>
+            <td class="alignRight">
+                <button class="buttonDelete remove-item">
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </td>
+        </tr>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
