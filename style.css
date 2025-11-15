@@ -1,0 +1,385 @@
+/* --- CSS Variables for Theming --- */
+:root {
+    --primary-color: #4f46e5; /* Indigo */
+    --primary-color-dark: #4338ca;
+    --secondary-color: #10b981; /* Emerald */
+    --secondary-color-dark: #059669;
+    --text-dark: #111827;
+    --text-medium: #374151;
+    --text-light: #6b7280;
+    --bg-light: #f9fafb;
+    --bg-white: #ffffff;
+    --border-color: #e5e7eb;
+    --focus-ring: rgba(79, 70, 229, 0.4);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Base & Layout --- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-medium);
+}
+
+.pageWrapper {
+  min-height: 100vh;
+  padding: 3rem 1rem;
+}
+
+.invoiceContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--bg-white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem;
+  border: 1px solid var(--border-color);
+}
+
+/* --- Header --- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-dark);
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.currencySelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-light);
+}
+
+/* --- Form Elements --- */
+.input, .select, .textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  background-color: var(--bg-white);
+}
+
+.select {
+  border-width: 2px;
+  border-color: var(--primary-color);
+  font-weight: 600;
+  background-color: var(--bg-white);
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-medium);
+}
+
+/* --- Section Styling --- */
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid2Cols {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.grid3Cols {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 768px) {
+  .grid2Cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid3Cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .colSpan2 {
+    grid-column: span 2 / span 2;
+  }
+}
+
+/* --- Input with Icon --- */
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+/* --- Line Items Table --- */
+.itemsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table thead {
+  background-color: var(--bg-light);
+}
+
+.table th {
+  color: var(--text-medium);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+}
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+.table tbody tr:hover {
+  background-color: var(--bg-light);
+}
+
+.table .alignRight {
+  text-align: right;
+}
+
+.table .colAmount {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.table .colNarrow {
+  width: 5rem;
+}
+
+.table .colMedium {
+  width: 8rem;
+}
+
+/* --- Buttons --- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.buttonPrimary {
+  background-color: var(--primary-color);
+}
+
+.buttonPrimary:hover {
+  background-color: #1d4ed8;
+}
+
+.buttonDelete {
+  color: var(--text-light);
+  background: none;
+  padding: 0.6rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.buttonDelete:hover {
+  color: #ef4444; /* Red */
+  background-color: #fee2e2; /* Light Red */
+  transform: scale(1.1);
+}
+
+.actionsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.buttonDownload {
+  background-color: var(--secondary-color);
+}
+
+.buttonDownload:hover {
+  background-color: var(--secondary-color-dark);
+}
+
+.buttonSave {
+  background-color: var(--primary-color);
+}
+
+.buttonSave:hover {
+  background-color: var(--primary-color-dark);
+}
+
+/* --- Totals Section --- */
+.summaryContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+    .summaryContainer {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+.totalsContainer {
+  width: 100%;
+}
+
+.totalsBox {
+  background-color: var(--bg-light);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  color: var(--text-medium);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.vatRow {
+    gap: 1rem;
+}
+
+.vatInput {
+    max-width: 80px;
+    text-align: right;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--bg-white);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+.totalAmount {
+  color: var(--primary-color);
+}
+
+/* --- Alert & Footer --- */
+.alert {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #fefce8;
+  border: 1px solid #fef08a;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #854d0e;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-inline {
+    width: 16px;
+    height: 16px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: var(--text-light);
+    font-size: 0.875rem;
+}
+.footer .icon-inline {
+    display: inline-block;
+    vertical-align: middle;
+    color: #ef4444;
+}
